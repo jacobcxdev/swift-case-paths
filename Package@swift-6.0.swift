@@ -65,7 +65,7 @@ let package = Package(
 
 if ProcessInfo.processInfo.environment["OMIT_MACRO_TESTS"] == nil {
   package.dependencies.append(
-    .package(url: "https://github.com/pointfreeco/swift-macro-testing", from: "0.2.0")
+    .package(path: "../swift-macro-testing")
   )
   package.targets.append(
     .testTarget(
