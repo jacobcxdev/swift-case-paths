@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 6.0
 
 import CompilerPluginSupport
 import Foundation
@@ -46,13 +46,17 @@ let package = Package(
       dependencies: [
         .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
         .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
+        .product(name: "SwiftDiagnostics", package: "swift-syntax"),
+        .product(name: "SwiftSyntax", package: "swift-syntax"),
+        .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
       ]
     ),
     .testTarget(
       name: "CasePathsTests",
       dependencies: ["CasePaths"]
     ),
-  ]
+  ],
+  swiftLanguageModes: [.v6]
 )
 
 #if !os(Windows)
@@ -78,16 +82,4 @@ if ProcessInfo.processInfo.environment["OMIT_MACRO_TESTS"] == nil {
       ]
     )
   )
-}
-
-for target in package.targets {
-  target.swiftSettings = target.swiftSettings ?? []
-  target.swiftSettings?.append(contentsOf: [
-    .enableExperimentalFeature("StrictConcurrency")
-  ])
-  // target.swiftSettings?.append(
-  //   .unsafeFlags([
-  //     "-enable-library-evolution",
-  //   ])
-  // )
 }
